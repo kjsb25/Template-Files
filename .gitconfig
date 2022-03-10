@@ -1,0 +1,46 @@
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[alias]
+nb = "!sh -c 'git fetch; git co dev; git reset --hard origin/dev; git co -b $1; git push origin head -u' -"
+mergeme = "!sh -c 'git fetch; git co dev; git reset --hard origin/dev; git merge --no-ff $1; gitk' -"
+purge = "!sh -c 'git co dev; git br -d $1; git push origin :$1' -"
+p = push origin HEAD -u
+testbuild = push origin head:testbuild
+yolo = push origin HEAD -f
+configs = config --list --show-origin
+st = status
+f = fetch
+co = checkout
+ap = add -p
+s = status -s
+cop = checkout -p
+cf = commit --fixup
+ci = commit
+c = commit
+ca = commit --amend
+cm = commit -m
+cp = cherry-pick
+cpc = cherry-pick --continue
+cia = commit --amend --no-edit
+dc = diff --cached
+pf = !git p -f
+br = branch
+rc = rebase --continue
+rhu = !git fetch && git reset --hard @{u}
+ro = !sh -c 'git rebase --onto $1 $2 $(git rev-parse --abbrev-ref HEAD)' -
+type = cat-file -t
+dump = cat-file -p
+fixup = commit --amend -C HEAD
+wdiff = diff --word-diff=color
+lg = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+hist = log --graph --pretty=format:'%Cred%h%Creset %Cblue%ad%Creset - %s%C(yellow)%d%Creset %C(bold blue)<%an>%Creset' --abbrev-commit --date=short
+allhist = log --graph --pretty=format:'%Cred%h%Creset %Cblue%ad%Creset - %s%C(yellow)%d%Creset %C(bold blue)<%an>%Creset' --abbrev-commit --date=short --all
+go = "!sh -c 'git fetch; git checkout $1; git reset --hard origin/$1' -"
+agit = "!sh -c 'git tag -am $1 $1' -"
+updev="!sh -c 'git fetch; git checkout dev; git pull; git reset --hard origin/dev; git co -'"
+standup = log --since yesterday --author $(git config user.email) --pretty=short
+current=rev-parse --abbrev-ref HEAD
+localsucks = !git fetch && git reset --hard @{u}
